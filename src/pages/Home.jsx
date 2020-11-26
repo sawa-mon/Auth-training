@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { push } from "connected-react-router";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { signOut } from "../reducks/users/operations";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -8,9 +9,8 @@ const Home = () => {
   return (
     <div>
       <h2>ログインに成功しました</h2>
-      <span>ユーザー情報</span>
-      <span>ユーザーID</span>
-      <span>ユーザー名</span>
+      <p>ユーザーID</p>
+      <p>ユーザー名</p>
       <button onClick={() => dispatch(push("/signin"))}>ログイン画面</button>
     </div>
   );

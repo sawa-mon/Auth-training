@@ -1,31 +1,22 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import GoogleSignIn from "../assets/Images/google_signin.png";
-import { push } from "connected-react-router";
+import firebase from "../firebase/index";
+import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
+
+const uiConfig = {
+  signInFlow: "popup",
+  signInSuccessUrl: "/",
+  signInOptions: [
+    firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+    firebase.auth.TwitterAuthProvider.PROVIDER_ID,
+    firebase.auth.EmailAuthProvider.PROVIDER_ID,
+    // firebaseui.auth.AnonymousAuthProvider.PROVIDER_ID,
+  ],
+};
 
 const SignIn = () => {
-  const dispatch = useDispatch();
-
-  // ui.start('#firebaseui-auth-container', {
-  //   signInOptions: [
-  //     {
-  //       provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-  //       scopes: [
-  //         'https://www.googleapis.com/auth/contacts.readonly'
-  //       ],
-  //       customParameters: {
-  //         prompt: 'select_account'
-  //       }
-  //     },
-  //     firebase.auth.TwitterAuthProvider.PROVIDER_ID,]
-  //   })
-
   return (
     <div>
-      <h2>サインイン</h2>
-      <button onClick={() => dispatch(push("/"))}>HOME</button>
-      <img src={GoogleSignIn} />
-      {/* <GoogleSignIn src="https://apis.google.com/js/platform.js" async defer/> */}
+      <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
     </div>
   );
 };
