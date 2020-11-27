@@ -1,10 +1,10 @@
 const initialState = {
   users: {
     isSignedIn: false,
-    uid: "",
+    email: "",
     icon: "",
     username: "",
-  }
+  },
 };
 
 export default initialState;
