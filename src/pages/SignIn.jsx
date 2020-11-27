@@ -4,7 +4,6 @@ import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import { googleSignIn, twitterSignIn } from "../reducks/users/operations";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-import { push } from "connected-react-router";
 import GoogleIcon from "../assets/Images/googleIcon.png";
 import TwitterIcon from "../assets/Images/profilenone.png";
 
