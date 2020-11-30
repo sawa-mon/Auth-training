@@ -12,9 +12,9 @@ const Router = () => {
       <Route exact path={"/signin"} component={SignIn} />
       {/* <Route exact path={"/signin/reset"} components={Reset} /> */}
 
-      {/* <Auth> */}
-      <Route exact path={"(/)?"} component={Home} />
-      {/* </Auth> */}
+      <Auth>
+        <Route exact path={"(/)?"} component={Home} />
+      </Auth>
     </Switch>
   );
 };

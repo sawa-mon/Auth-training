@@ -5,6 +5,7 @@ import { firebaseConfig } from "./config";
 
 export const providerGoogle = new firebase.auth.GoogleAuthProvider();
 export const providerTwitter = new firebase.auth.TwitterAuthProvider();
+export const providerGithub = new firebase.auth.GithubAuthProvider();
 export const firebaseApp = firebase.initializeApp(firebaseConfig);
 export const auth = firebase.auth();
 export const db = firebase.firestore();

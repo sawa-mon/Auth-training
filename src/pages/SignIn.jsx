@@ -1,11 +1,15 @@
 import React from "react";
 import firebase from "../firebase/index";
-import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
-import { googleSignIn, twitterSignIn } from "../reducks/users/operations";
+import {
+  googleSignIn,
+  twitterSignIn,
+  githubSignIn,
+} from "../reducks/users/operations";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-import GoogleIcon from "../assets/Images/googleIcon.png";
-import TwitterIcon from "../assets/Images/profilenone.png";
+import GoogleIcon from "../assets/Images/google.svg";
+import TwitterIcon from "../assets/Images/twitter.svg";
+import GithubIcon from "../assets/Images/github.svg";
 
 const SignIn = () => {
   const dispatch = useDispatch();
@@ -18,6 +22,9 @@ const SignIn = () => {
       case "twitter":
         dispatch(twitterSignIn());
         break;
+      case "github":
+        dispatch(githubSignIn());
+        break;
       default:
         break;
     }
@@ -26,20 +33,57 @@ const SignIn = () => {
   const loginMenus = [
     {
       func: selectLogin,
-      label: "GoogleLogin",
-      icon:
-        "https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg",
+      label: "GoogleLoginでログインする",
+      icon: GoogleIcon,
       id: "google",
       value: "/",
-      style: { backgroundColor: "black", color: "pink" },
+      style: {
+        backgroundColor: "white",
+        color: "black",
+        fontSize: "15px",
+        width: "233px",
+        display: "flex",
+        placeItems: "center",
+        padding: "5px",
+        margin: "5px",
+        borderRadius: "5px",
+      },
     },
     {
       func: selectLogin,
-      label: "TwitterLogin",
-      icon: "https://upload.wikimedia.org/wikipedia/fr/c/c8/Twitter_Bird.svg",
+      label: "TwitterLoginでログインする",
+      icon: TwitterIcon,
       id: "twitter",
       value: "/",
-      style: { backgroundColor: "black", color: "pink" },
+      style: {
+        backgroundColor: "white",
+        color: "black",
+        fontSize: "15px",
+        width: "233px",
+        display: "flex",
+        placeItems: "center",
+        padding: "5px",
+        margin: "5px",
+        borderRadius: "5px",
+      },
+    },
+    {
+      func: selectLogin,
+      label: "GithubLoginでログインする",
+      icon: GithubIcon,
+      id: "github",
+      value: "/",
+      style: {
+        backgroundColor: "white",
+        color: "black",
+        fontSize: "15px",
+        width: "233px",
+        display: "flex",
+        placeItems: "center",
+        padding: "5px",
+        margin: "5px",
+        borderRadius: "5px",
+      },
     },
   ];
 
@@ -65,6 +109,6 @@ const StyledButton = styled.button`
 `;
 
 const StyledLoginIcon = styled.img`
-  height: 46px;
-  width: 46px;
+  height: 26px;
+  width: 26px;
 `;

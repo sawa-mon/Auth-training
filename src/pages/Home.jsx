@@ -19,9 +19,9 @@ const Home = () => {
     <div>
       <h2>ログインに成功しました</h2>
       <img src={icon} />
-      <p>ユーザーID(email):{email}</p>
+      <p>ユーザーID:{email}</p>
       <p>ユーザー名:{name}</p>
-      <button onClick={() => dispatch(push("/signin"))}>ログイン画面</button>
+      <button onClick={() => dispatch(signOut())}>ログアウトする</button>
     </div>
   );
 };
