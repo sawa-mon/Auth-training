@@ -79,9 +79,9 @@ export const twitterSignIn = () => {
 
         const userData = {
           createed_at: timestamp,
-          email: userinfo.username,
+          email: user.displayName,
           icon: user.photoURL,
-          username: user.displayName,
+          username: userinfo.username,
         };
 
         db.collection("users")

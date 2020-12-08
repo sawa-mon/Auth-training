@@ -1,5 +1,4 @@
 import React from "react";
-import firebase from "../firebase/index";
 import {
   googleSignIn,
   twitterSignIn,
@@ -33,7 +32,7 @@ const SignIn = () => {
   const loginMenus = [
     {
       func: selectLogin,
-      label: "GoogleLoginでログインする",
+      label: "Googleアカウントでログイン",
       icon: GoogleIcon,
       id: "google",
       value: "/",
@@ -41,17 +40,17 @@ const SignIn = () => {
         backgroundColor: "white",
         color: "black",
         fontSize: "15px",
-        width: "233px",
+        width: "245px",
         display: "flex",
         placeItems: "center",
         padding: "5px",
-        margin: "5px",
+        margin: "7px 0 7px 0",
         borderRadius: "5px",
       },
     },
     {
       func: selectLogin,
-      label: "TwitterLoginでログインする",
+      label: "Twitterアカウントでログイン",
       icon: TwitterIcon,
       id: "twitter",
       value: "/",
@@ -59,17 +58,17 @@ const SignIn = () => {
         backgroundColor: "white",
         color: "black",
         fontSize: "15px",
-        width: "233px",
+        width: "245px",
         display: "flex",
         placeItems: "center",
         padding: "5px",
-        margin: "5px",
+        margin: "7px 0 7px 0",
         borderRadius: "5px",
       },
     },
     {
       func: selectLogin,
-      label: "GithubLoginでログインする",
+      label: "Githubアカウントでログイン",
       icon: GithubIcon,
       id: "github",
       value: "/",
@@ -77,29 +76,38 @@ const SignIn = () => {
         backgroundColor: "white",
         color: "black",
         fontSize: "15px",
-        width: "233px",
+        width: "245px",
         display: "flex",
         placeItems: "center",
         padding: "5px",
-        margin: "5px",
+        margin: "7px 0 7px 0",
         borderRadius: "5px",
       },
     },
   ];
 
   return (
-    <div>
+    <Section>
       {loginMenus.map((menu) => (
         <StyledButton style={menu.style} onClick={() => menu.func(menu.id)}>
           <StyledLoginIcon src={menu.icon} alt="LoginIcon" />
           {menu.label}
         </StyledButton>
       ))}
-    </div>
+    </Section>
   );
 };
 
 export default SignIn;
+
+const Section = styled.div`
+  width: 245px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 auto;
+`;
 
 const StyledButton = styled.button`
   cursor: pointer;
@@ -111,4 +119,5 @@ const StyledButton = styled.button`
 const StyledLoginIcon = styled.img`
   height: 26px;
   width: 26px;
+  margin-right: 5px;
 `;

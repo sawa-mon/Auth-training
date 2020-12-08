@@ -1,4 +1,8 @@
 const initialState = {
+  tweets: {
+    list: [],
+  },
+
   users: {
     isSignedIn: false,
     email: "",
