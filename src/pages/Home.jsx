@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { push } from "connected-react-router";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { signOut } from "../reducks/users/operations";
 import {
@@ -9,7 +8,7 @@ import {
 } from "../reducks/users/selectors";
 import styled from "styled-components";
 import TweetUp from "./TweetUp";
-import TweetView from "./TweetView";
+// import TweetView from "./TweetView";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -21,12 +20,12 @@ const Home = () => {
   return (
     <Section>
       <h2>ログインしました</h2>
+      <button onClick={() => dispatch(signOut())}>ログアウトする</button>
       <StyledIcon src={icon} />
       <p>ユーザーID:{email}</p>
       <p>ユーザー名:{name}</p>
       <TweetUp />
-      <TweetView />
-      <button onClick={() => dispatch(signOut())}>ログアウトする</button>
+      {/* <TweetView /> */}
     </Section>
   );
 };

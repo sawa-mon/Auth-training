@@ -1,59 +1,75 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import styled from "styled-components";
 import { db } from "../firebase";
-import { getTweetList } from "../reducks/tweets/selectors";
+import { tweetRetention } from "../reducks/tweets/operetions";
+
+// import styled from "styled-components";
 
 const TweetApp = () => {
   const dispatch = useDispatch();
+  let id = window.location.pathname.split("/product/edit")[1];
 
-  const [list, setList] = useState("");
+  // if (id !== "") {
+  //   id = id.split("/")[1];
+  // }
 
-  const inputList = useCallback(
+  const [tweets, setTweets] = useState("");
+  const [tweetsList, setTweetsList] = useState([]);
+
+  const onChangeTweetText = useCallback(
     (event) => {
-      setList(event.target.value);
+      setTweets(event.target.value);
     },
-    [setList]
+    [setTweets]
   );
 
   useEffect(() => {
-    db.collection("tweets")
-      .doc()
-      .get()
-      .then((snapshot) => {
-        const data = snapshot.data();
-        setList(data.list);
-      });
-  }, []);
+    if (id !== "") {
+      db.collection("tweets")
+        .doc(id)
+        .get()
+        .then((snapshot) => {
+          const data = snapshot.data();
+          setTweets(data.tweets);
+          setTweetsList(data.tweetsList);
+        });
+    }
+  }, [id]);
 
   useEffect(() => {
+    //データベースの商品情報から引っ張ってきて反映する
     db.collection("tweets")
-      .orderBy("tweets", "asc")
+      .orderBy("order", "asc") //昇順で並べ替える
       .get()
       .then((snapshots) => {
+        const list = [];
         snapshots.forEach((snapshots) => {
           const data = snapshots.data();
           list.push({
-            tweet: data.list,
+            id: data.id,
           });
         });
+        setTweetsList(list);
       });
   }, []);
 
   return (
     <section>
-      <Wrap>
+      <div>
         <input
-          onChange={() => inputList()}
           type="text"
-          placeholder="Let's tweet the current event"
+          placeholder="Tweet the now happen"
+          onChange={onChangeTweetText}
+          value={tweets}
         />
-        <button onClick={dispatch(getTweetList())}>Tweet</button>
-      </Wrap>
+        <button onClick={() => dispatch(tweetRetention(id, tweets))}>
+          Tweet
+        </button>
+      </div>
     </section>
   );
 };
 
 export default TweetApp;
 
-const Wrap = styled.div``;
+// const Wrap = styled.div``;
