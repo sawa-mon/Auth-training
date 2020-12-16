@@ -1,51 +1,148 @@
-import { providerGoogle, providerTwitter } from "../../firebase/index";
-import firebase from "firebase";
-import { signInAction } from "./acitons";
+import {
+  providerGoogle,
+  providerTwitter,
+  providerGithub,
+} from "../../firebase/index";
+import { signInAction, signOutAction } from "./acitons";
 import { push } from "connected-react-router";
+import { auth, db, FirebaseTimestamp } from "../../firebase/index";
+
+export const listenAuthState = () => {
+  return async (dispatch) => {
+    return auth.onAuthStateChanged((user) => {
+      if (user) {
+        const uid = user.uid;
+
+        db.collection("users")
+          .doc(uid)
+          .get()
+          .then((snapshot) => {
+            const data = snapshot.data();
+
+            dispatch(
+              signInAction({
+                isSignedIn: true,
+                icon: user.photoURL,
+                username: user.displayName,
+              })
+            );
+            dispatch(push("/"));
+          });
+      } else {
+        dispatch(push("/signin"));
+      }
+    });
+  };
+};
 
 export const googleSignIn = () => {
-  return (dispatch) => {
-    firebase
-      .auth()
-      .signInWithPopup(providerGoogle)
-      .then((result) => {
-        const user = result.user;
-        const userdata = {
+  return async (dispatch) => {
+    auth.signInWithPopup(providerGoogle).then((result) => {
+      const user = result.user;
+
+      if (user) {
+        const uid = user.uid;
+        const timestamp = FirebaseTimestamp.now();
+
+        const userData = {
+          createed_at: timestamp,
           email: user.email,
           icon: user.photoURL,
           username: user.displayName,
         };
-        dispatch(signInAction(userdata));
-      })
-      .then(() => {
-        dispatch(push("/"));
-      })
-      .catch(() => {
-        alert("ログイン失敗しました");
-      });
+        db.collection("users")
+          .doc(uid)
+          .set(userData)
+          .then(() => {
+            dispatch(signInAction(userData));
+          })
+          .then(() => {
+            dispatch(push("/"));
+          })
+          .catch(() => {
+            alert("ログインに失敗しました");
+          });
+      }
+    });
   };
 };
 
 export const twitterSignIn = () => {
-  return (dispatch) => {
-    firebase
-      .auth()
-      .signInWithPopup(providerTwitter)
-      .then((result) => {
-        const user = result.user;
-        console.log(user);
-        const userdata = {
+  return async (dispatch) => {
+    auth.signInWithPopup(providerTwitter).then((result) => {
+      const user = result.user;
+
+      if (user) {
+        const uid = user.uid;
+        const timestamp = FirebaseTimestamp.now();
+        const userinfo = result.additionalUserInfo;
+
+        const userData = {
+          createed_at: timestamp,
+          email: user.displayName,
+          icon: user.photoURL,
+          username: userinfo.username,
+        };
+
+        db.collection("users")
+          .doc(uid)
+          .set(userData)
+          .then(() => {
+            dispatch(signInAction(userData));
+          })
+          .then(() => {
+            dispatch(push("/"));
+          })
+          .catch(() => {
+            alert("ログインに失敗しました");
+          });
+      }
+    });
+  };
+};
+
+export const githubSignIn = () => {
+  return async (dispatch) => {
+    auth.signInWithPopup(providerGithub).then((result) => {
+      const user = result.user;
+
+      if (user) {
+        const uid = user.uid;
+        const timestamp = FirebaseTimestamp.now();
+
+        const userData = {
+          createed_at: timestamp,
           email: user.email,
           icon: user.photoURL,
           username: user.displayName,
         };
-        dispatch(signInAction(userdata));
-      })
+        db.collection("users")
+          .doc(uid)
+          .set(userData)
+          .then(() => {
+            dispatch(signInAction(userData));
+          })
+          .then(() => {
+            dispatch(push("/"));
+          })
+          .catch(() => {
+            alert("ログインに失敗しました");
+          });
+      }
+    });
+  };
+};
+
+export const signOut = () => {
+  return async (dispatch) => {
+    auth
+      .signOut()
       .then(() => {
-        dispatch(push("/"));
+        dispatch(signOutAction());
+        dispatch(push("/signin"));
       })
       .catch(() => {
-        alert("ログイン失敗しました");
+        alert("ログアウトに失敗しました");
       });
   };
 };

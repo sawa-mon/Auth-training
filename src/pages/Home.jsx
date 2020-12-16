@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { push } from "connected-react-router";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { signOut } from "../reducks/users/operations";
 import {
@@ -7,6 +6,9 @@ import {
   getUserIcon,
   getUserName,
 } from "../reducks/users/selectors";
+import styled from "styled-components";
+import TweetUp from "./TweetUp";
+// import TweetView from "./TweetView";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -16,14 +18,25 @@ const Home = () => {
   const name = getUserName(selector);
 
   return (
-    <div>
-      <h2>ログインに成功しました</h2>
-      <img src={icon} />
-      <p>ユーザーID(email):{email}</p>
+    <Section>
+      <h2>ログインしました</h2>
+      <button onClick={() => dispatch(signOut())}>ログアウトする</button>
+      <StyledIcon src={icon} />
+      <p>ユーザーID:{email}</p>
       <p>ユーザー名:{name}</p>
-      <button onClick={() => dispatch(push("/signin"))}>ログイン画面</button>
-    </div>
+      <TweetUp />
+      {/* <TweetView /> */}
+    </Section>
   );
 };
 
 export default Home;
+
+const StyledIcon = styled.img`
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
+`;
+
+const Section = styled.div``;
