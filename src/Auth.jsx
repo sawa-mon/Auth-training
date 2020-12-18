@@ -18,7 +18,7 @@ const Auth = ({ children }) => {
   if (!isSignedIn) {
     return <></>;
   } else {
-    return children; //もしサインインしていたら子要素(RouterのRoute(Home)を返します)
+    return children; //もしサインインしていたら子要素(RouterのRoute(Home)を返す)
   }
 };
 
