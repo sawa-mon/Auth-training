@@ -7,7 +7,7 @@ const TweetView = () => {
 
   return (
     <div>
-      <p></p>
+      <p />
     </div>
   );
 };

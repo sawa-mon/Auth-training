@@ -1,68 +1,41 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { db } from "../firebase";
-import { tweetRetention } from "../reducks/tweets/operetions";
+import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
+import { db, FirebaseTimestamp } from "../firebase";
+import { getUserIcon, getUserName } from "../reducks/users/selectors";
 
 // import styled from "styled-components";
 
 const TweetApp = () => {
-  const dispatch = useDispatch();
-  let id = window.location.pathname.split("/product/edit")[1];
-
-  // if (id !== "") {
-  //   id = id.split("/")[1];
-  // }
-
+  const selector = useSelector((state) => state);
+  const icon = getUserIcon(selector);
+  const name = getUserName(selector);
+  const timestamp = FirebaseTimestamp.now();
   const [tweets, setTweets] = useState("");
-  const [tweetsList, setTweetsList] = useState([]);
+  const dispatch = useDispatch();
 
-  const onChangeTweetText = useCallback(
-    (event) => {
-      setTweets(event.target.value);
-    },
-    [setTweets]
-  );
-
-  useEffect(() => {
-    if (id !== "") {
-      db.collection("tweets")
-        .doc(id)
-        .get()
-        .then((snapshot) => {
-          const data = snapshot.data();
-          setTweets(data.tweets);
-          setTweetsList(data.tweetsList);
-        });
-    }
-  }, [id]);
-
-  useEffect(() => {
-    //データベースの商品情報から引っ張ってきて反映する
-    db.collection("tweets")
-      .orderBy("order", "asc") //昇順で並べ替える
-      .get()
-      .then((snapshots) => {
-        const list = [];
-        snapshots.forEach((snapshots) => {
-          const data = snapshots.data();
-          list.push({
-            id: data.id,
-          });
-        });
-        setTweetsList(list);
-      });
-  }, []);
+  const sendTweet = async () => {
+    await db.collection("tweets").add({
+      avater: icon,
+      text: tweets,
+      timestamp: timestamp,
+      name: name,
+    });
+    setTweets("");
+  };
 
   return (
     <section>
       <div>
+        <StyledIcon src={icon} />
         <input
           type="text"
           placeholder="Tweet the now happen"
-          onChange={onChangeTweetText}
+          // onChange={onChangeTweetText}
           value={tweets}
+          onChange={(event) => setTweets(event.target.value)}
         />
-        <button onClick={() => dispatch(tweetRetention(id, tweets))}>
+        <button type="submit" onClick={() => dispatch(sendTweet)}>
           Tweet
         </button>
       </div>
@@ -72,4 +45,9 @@ const TweetApp = () => {
 
 export default TweetApp;
 
-// const Wrap = styled.div``;
+const StyledIcon = styled.img`
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
+`;
