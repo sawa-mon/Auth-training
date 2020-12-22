@@ -23,6 +23,7 @@ export const listenAuthState = () => {
               signInAction({
                 isSignedIn: true,
                 icon: user.photoURL,
+                email: user.email,
                 username: user.displayName,
               })
             );

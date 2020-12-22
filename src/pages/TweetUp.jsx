@@ -3,10 +3,10 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { db, FirebaseTimestamp } from "../firebase";
 import { getUserIcon, getUserName } from "../reducks/users/selectors";
+import { signOut } from "../reducks/users/operations";
+import { Button } from "../components/UIkit/Button";
 
-// import styled from "styled-components";
-
-const TweetApp = () => {
+export const TweetUp = () => {
   const selector = useSelector((state) => state);
   const icon = getUserIcon(selector);
   const name = getUserName(selector);
@@ -16,7 +16,7 @@ const TweetApp = () => {
 
   const sendTweet = async () => {
     await db.collection("tweets").add({
-      avater: icon,
+      avatar: icon,
       text: tweets,
       timestamp: timestamp,
       name: name,
@@ -25,29 +25,62 @@ const TweetApp = () => {
   };
 
   return (
-    <section>
-      <div>
+    <Section>
+      <WrapFrom>
         <StyledIcon src={icon} />
-        <input
-          type="text"
-          placeholder="Tweet the now happen"
-          // onChange={onChangeTweetText}
-          value={tweets}
-          onChange={(event) => setTweets(event.target.value)}
-        />
-        <button type="submit" onClick={() => dispatch(sendTweet)}>
-          Tweet
-        </button>
-      </div>
-    </section>
+        <StyledInputForm>
+          <textarea
+            placeholder="Tweet the now happen"
+            value={tweets}
+            onChange={(event) => setTweets(event.target.value)}
+            cols={38}
+            rows={3}
+          />
+        </StyledInputForm>
+      </WrapFrom>
+      <WrapButton>
+        {tweets ? (
+          <Button
+            addTweet
+            type="submit"
+            onClick={() => dispatch(sendTweet)}
+            label="ポチっと投稿"
+          />
+        ) : (
+          <Button onClick={() => dispatch(signOut())} label="退室" />
+        )}
+      </WrapButton>
+    </Section>
   );
 };
 
-export default TweetApp;
+const Section = styled.section`
+  display: flex;
+  flex-direction: column;
+  width: 350px;
+`;
 
 const StyledIcon = styled.img`
+  padding: 5px;
   width: 50px;
   height: 50px;
   object-fit: cover;
   border-radius: 50%;
+`;
+
+const WrapFrom = styled.div`
+  display: flex;
+`;
+
+const StyledInputForm = styled.div`
+  textarea {
+    border-radius: 10px;
+  }
+`;
+
+const WrapButton = styled.div`
+  margin: 10px;
+  display: grid;
+  place-items: center;
+  padding: 5px;
 `;

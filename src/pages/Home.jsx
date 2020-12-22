@@ -1,34 +1,39 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { signOut } from "../reducks/users/operations";
-import {
-  getUserEmail,
-  getUserIcon,
-  getUserName,
-} from "../reducks/users/selectors";
 import styled from "styled-components";
-import TweetUp from "./TweetUp";
-import TweetView from "./TweetView";
+import { TweetUp } from "./TweetUp";
+import { TweetView } from "./TweetView";
 
-const Home = () => {
-  const dispatch = useDispatch();
-  const selector = useSelector((state) => state);
-  const email = getUserEmail(selector);
-  const icon = getUserIcon(selector);
-  const name = getUserName(selector);
-
+const Home = (props) => {
+  console.log(props);
   return (
     <Section>
-      <h2>ログインしました</h2>
-      <button onClick={() => dispatch(signOut())}>ログアウトする</button>
-      <p>ユーザーID:{email}</p>
-      <p>ユーザー名:{name}</p>
-      <TweetUp />
-      <TweetView />
+      <Stylestitle>コソコソつぶやく部屋</Stylestitle>
+      <StyledContainer>
+        <TweetUp />
+        <TweetView />
+      </StyledContainer>
     </Section>
   );
 };
 
 export default Home;
 
-const Section = styled.div``;
+const Section = styled.div`
+  height: 100vh;
+  margin: auto;
+  background-color: gray;
+`;
+
+const Stylestitle = styled.h2`
+  margin: 0;
+  padding: 25px;
+  font-size: 30px;
+  display: grid;
+  place-items: center;
+`;
+
+const StyledContainer = styled.div`
+  display: grid;
+  place-items: center;
+`;
