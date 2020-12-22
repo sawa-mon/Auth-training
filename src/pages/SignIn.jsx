@@ -110,6 +110,7 @@ const Section = styled.div`
 `;
 
 const StyledButton = styled.button`
+  outline: none;
   cursor: pointer;
   :hover {
     opacity: 0.7;
