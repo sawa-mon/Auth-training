@@ -5,7 +5,6 @@ import { TweetUp } from "./TweetUp";
 import { TweetView } from "./TweetView";
 
 const Home = (props) => {
-  console.log(props);
   return (
     <Section>
       <Stylestitle>コソコソつぶやく部屋</Stylestitle>

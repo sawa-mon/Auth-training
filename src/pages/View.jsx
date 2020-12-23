@@ -28,6 +28,7 @@ const Section = styled.section`
 
 const StyledUserInfo = styled.section`
   display: flex;
+  padding: 5px;
 `;
 
 const StyledIcon = styled.img`
@@ -35,6 +36,7 @@ const StyledIcon = styled.img`
   height: 50px;
   object-fit: cover;
   border-radius: 50%;
+  padding-right: 5px;
 `;
 
 const StyledWrap = styled.div`
@@ -49,10 +51,10 @@ const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 0;
-  padding-bottom: 35px;
+  padding-bottom: 5px;
 `;
 
 const StyledTextArea = styled.div`
   padding: 5px;
-  width: 350px;
+  width: 325px;
 `;
