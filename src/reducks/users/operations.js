@@ -22,9 +22,9 @@ export const listenAuthState = () => {
             dispatch(
               signInAction({
                 isSignedIn: true,
-                icon: user.photoURL,
-                email: user.email,
-                username: user.displayName,
+                icon: data.icon,
+                email: data.email,
+                username: data.displayName,
               })
             );
             dispatch(push("/"));

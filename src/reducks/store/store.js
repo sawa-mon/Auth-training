@@ -10,7 +10,7 @@ import thunk from "redux-thunk";
 import { UsersReducer } from "../users/reducers";
 import { TweetsReducer } from "../tweets/reducers";
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+// const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 export default function createStore(history) {
   //引数でhistoryを指定
@@ -20,13 +20,13 @@ export default function createStore(history) {
       users: UsersReducer,
       tweets: TweetsReducer,
     }),
-    composeEnhancers(
-      //DevToolsの使用用
-      applyMiddleware(
-        //引数にrouterMiddlewareを指定
-        routerMiddleware(history), //引数にhistoryを指定
-        thunk
-      )
+    // composeEnhancers(
+    //DevToolsの使用用
+    applyMiddleware(
+      //引数にrouterMiddlewareを指定
+      routerMiddleware(history), //引数にhistoryを指定
+      thunk
     )
   );
+  // );
 }
