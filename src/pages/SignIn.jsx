@@ -89,7 +89,11 @@ const SignIn = () => {
   return (
     <Section>
       {loginMenus.map((menu) => (
-        <StyledButton style={menu.style} onClick={() => menu.func(menu.id)}>
+        <StyledButton
+          key={menu.id}
+          style={menu.style}
+          onClick={() => menu.func(menu.id)}
+        >
           <StyledLoginIcon src={menu.icon} alt="LoginIcon" />
           {menu.label}
         </StyledButton>
